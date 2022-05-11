@@ -25,10 +25,10 @@ public class Account {
 		Collections.sort(payments);
 	}
 	/**
-	 * Given @param payment calclulates the EMI to be paid in next emi. 
+	 * Given @param payment calculates the EMI to be paid in next emi. 
 	 * For final EMI of loan, this @return remaining due and EMI amount for other EMIs.
 	 */
-	private long paidInNextEmi(int payment) {
+	private long paidInNextEmi(long payment) {
 		long remainingDue = amount - payment;
 		if(remainingDue>emiAmount) return emiAmount;
 		else return remainingDue;
@@ -44,7 +44,7 @@ public class Account {
 		for(int index=0;index<payments.size()&&payments.get(index).getEmiNumber()<emiNo;index++) {
 			totalPaidInLumpSum+=payments.get(index).getPaymentAmount();
 		}
-		long finalEmiAmount = paidInFinalEmi(totalPaidExcludingFinal + totalPaidInLumpSum);
+		long finalEmiAmount = paidInNextEmi(totalPaidExcludingFinal + totalPaidInLumpSum);
 		long totalPaid = totalPaidExcludingFinal + totalPaidInLumpSum + finalEmiAmount;
 		return totalPaid;
 	}
