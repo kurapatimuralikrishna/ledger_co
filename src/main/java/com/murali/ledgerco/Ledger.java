@@ -19,7 +19,7 @@ public class Ledger {
 	public static void main(String[] args) {
 		try {
 			
-			Scanner sc = LedgerService.getScanner();
+			Scanner sc = LedgerService.getScanner(args[0]);
 			List<String> commands = LedgerService.getRawCommnads(sc);
 			
 			for (String rawCommand : commands) {

@@ -61,8 +61,8 @@ public class LedgerService {
 		return commands;
 	}
 
-	public static Scanner getScanner() throws FileNotFoundException {
-		FileInputStream fis = new FileInputStream("sample_input/input1.txt");
+	public static Scanner getScanner(String inputPath) throws FileNotFoundException {
+		FileInputStream fis = new FileInputStream(inputPath);
 		Scanner sc = new Scanner(fis);
 		return sc;
 	}
