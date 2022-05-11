@@ -12,7 +12,8 @@ public class Account {
 	
 	public Account(int principal, int term, int interest) {
 		super();
-		this.amount = (long)Math.ceil(principal*term*interestAsPercent(interest));
+		double totalInterest = principal*term*interestAsPercent(interest);
+		this.amount = (long)Math.ceil(principal + totalInterest);
 		this.emiAmount = (long)Math.ceil((double)this.amount/(term*MONTHS_IN_YEAR));
 		this.payments = new ArrayList<>();
 	}
@@ -35,7 +36,7 @@ public class Account {
 	public long totalPaidByEmi(int emiNo) {
 		long totalPaidExcludingFinal = emiAmount*(emiNo-1);
 		long totalPaidInLumpSum = 0;
-		for(int index=0;isInBounds(index)&&isBeforeEmi(index, emiNo);index++) {
+		for(int index=0;isInBounds(index)&&isNotAfterEmi(index, emiNo);index++) {
 			totalPaidInLumpSum+=payments.get(index).getPaymentAmount();
 		}
 		long finalEmiAmount = amountPaidInNextEmi(totalPaidExcludingFinal + totalPaidInLumpSum);
@@ -49,8 +50,8 @@ public class Account {
 		return emis;
 	}
 	
-	private boolean isBeforeEmi(int index, int emiNo) {
-		return payments.get(index).getEmiNumber()<emiNo;
+	private boolean isNotAfterEmi(int index, int emiNo) {
+		return payments.get(index).getEmiNumber()<=emiNo;
 	}
 
 	private boolean isInBounds(int index) {

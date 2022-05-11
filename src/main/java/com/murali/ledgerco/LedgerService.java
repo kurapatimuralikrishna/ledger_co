@@ -18,7 +18,7 @@ public class LedgerService {
 		int principal = Integer.parseInt(command[3]);
 		int term = Integer.parseInt(command[4]);
 		int interest = Integer.parseInt(command[5]);
-		Account borrowerAccount = new Account(interest, term, principal);
+		Account borrowerAccount = new Account(principal, term, interest);
 		
 		Ledger.accounts.put(borrower, borrowerAccount);
 	}
