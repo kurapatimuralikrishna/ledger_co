@@ -24,16 +24,28 @@ public class Account {
 		payments.add(payment);
 		Collections.sort(payments);
 	}
+	/**
+	 * Given @param payment calclulates the EMI to be paid in next emi. 
+	 * For final EMI of loan, this @return remaining due and EMI amount for other EMIs.
+	 */
+	private long paidInNextEmi(int payment) {
+		long remainingDue = amount - payment;
+		if(remainingDue>emiAmount) return emiAmount;
+		else return remainingDue;
+	}
 	//balance method - returns balance
 	/**
 	 * @param emiNo - all payments done before and during this EMI will be counted
 	 * @return - total payments done for executing BALANCE command
 	 */
 	public long totalPaidByEmi(int emiNo) {
-		long totalPaid = emiAmount*emiNo;
-		for(int index=0;payments.get(index).getEmiNumber()<emiNo;index++) {
-			totalPaid+=payments.get(index).getPaymentAmount();
+		long totalPaidExcludingFinal = emiAmount*(emiNo-1);
+		long totalPaidInLumpSum = 0;
+		for(int index=0;index<payments.size()&&payments.get(index).getEmiNumber()<emiNo;index++) {
+			totalPaidInLumpSum+=payments.get(index).getPaymentAmount();
 		}
+		long finalEmiAmount = paidInFinalEmi(totalPaidExcludingFinal + totalPaidInLumpSum);
+		long totalPaid = totalPaidExcludingFinal + totalPaidInLumpSum + finalEmiAmount;
 		return totalPaid;
 	}
 	//EMIs left method - returns remaining EMIs
