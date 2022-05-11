@@ -12,11 +12,15 @@ public class Account {
 	
 	public Account(int principal, int term, int interest) {
 		super();
-		this.amount = principal*term*interest;
+		this.amount = (long)Math.ceil(principal*term*interestAsPercent(interest));
 		this.emiAmount = (long)Math.ceil((double)this.amount/(term*MONTHS_IN_YEAR));
 		this.payments = new ArrayList<>();
 	}
 	
+	private double interestAsPercent(int interest) {
+		return (double)interest/100;
+	}
+
 	public void addPayment(Payment payment) {
 		payments.add(payment);
 		Collections.sort(payments);

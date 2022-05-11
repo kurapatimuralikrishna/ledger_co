@@ -13,7 +13,6 @@ import com.murali.ledgerco.model.Payment;
 public class LedgerService {
 	
 
-	//Maybe changing 
 	public static void createLoanAccount(Borrower borrower, String[] command) {
 		
 		int principal = Integer.parseInt(command[3]);
